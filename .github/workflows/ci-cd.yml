@@ -69,9 +69,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Check DEPLOY_HOST value
-        run: echo "DEPLOY_HOST is set to: ${{ secrets.DEPLOY_HOST }}"
-
       - name: Deploy on server
         uses: appleboy/ssh-action@master
         with:
