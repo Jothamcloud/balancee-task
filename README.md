@@ -138,3 +138,8 @@ Note: Using password-based authentication in CI/CD pipelines is generally not re
 - Docker Hub: Cloud-based repository for Docker images
 - pnpm: Fast, disk space efficient package manager
 
+## Application Demo
+
+Below is a screenshot of the application running successfully on a staging environment:
+
+![Application Running](Application.png)
