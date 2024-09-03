@@ -72,11 +72,11 @@ jobs:
       - name: Deploy on server
         uses: appleboy/ssh-action@master
         with:
-          host: ${{ secrets.DEPLOY_HOST }}
+          host: ${{ secrets.DEPLOY_SERVER }}
           username: ${{ secrets.DEPLOY_USER }}
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
-            echo "Connecting to server ${{ secrets.DEPLOY_HOST }}"
+            echo "Connecting to server ${{ secrets.DEPLOY_SERVER }}"
             cd balancee-task || exit
             git pull origin main
             docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/balancee-task:latest
