@@ -1,52 +1,59 @@
-name: CI/CD Pipeline with Docker and Tests
+name: CI/CD Pipeline
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - uses: actions/checkout@v3
+    - name: Use Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    - name: Install pnpm
+      run: npm install -g pnpm
+    - name: Install dependencies
+      run: pnpm install --frozen-lockfile
+    - name: Run tests
+      run: pnpm test
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+  build-and-push:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+    - name: Login to Docker Hub
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_TOKEN }}
+    - name: Build and push
+      uses: docker/build-push-action@v4
+      with:
+        push: true
+        tags: ${{ secrets.DOCKER_HUB_USERNAME }}/balancee-app:latest
 
-      - name: Install dependencies
-        run: |
-          npm install -g pnpm
-          pnpm install
-
-      - name: Run tests
-        run: pnpm test
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_TOKEN }}
-  
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v4
-        with:
-          context: .
-          push: true
-          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/balancee-task:latest
-
-      - name: Deploy to Staging
-        if: success()
-        env:
-          DEPLOY_SERVER: ${{ secrets.DEPLOY_SERVER }}
-          DEPLOY_USER: ${{ secrets.DEPLOY_USER }}
-          SSH_PASSWORD: ${{ secrets.SSH_PASSWORD }}
-        run: |
-          cd balancee-task/
-          git pull origin main 
-          docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/balancee-task:latest
-          docker compose up -d 
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Install sshpass
+      run: sudo apt-get install sshpass
+    - name: Deploy to staging
+      env:
+        DOCKER_IMAGE: ${{ secrets.DOCKER_HUB_USERNAME }}/balancee-app:latest
+        HOST: ${{ secrets.DEPLOY_HOST }}
+        USER: ${{ secrets.DEPLOY_USER }}
+        PASSWORD: ${{ secrets.SSH_PASSWORD }}
+      run: |
+        sshpass -p $PASSWORD ssh -o StrictHostKeyChecking=no $USER@$HOST '
+          docker pull $DOCKER_IMAGE
+          docker stop balancee-app || true
+          docker rm balancee-app || true
+          docker run -d --name balancee-app -p 3000:3000 $DOCKER_IMAGE
+        '

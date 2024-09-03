@@ -1,27 +1,21 @@
-name: balancee-task
+name: jothamcloud/balancee-task
+
 services:
   app:
-    image: ${COMPOSE_PROJECT_NAME}:latest
+    image: jothamcloud/balancee-task:latest
     build: .
     healthcheck:
       test: "curl -fs http://localhost:3000"
       interval: 3s
       retries: 3
       timeout: 5s
+
   nginx:
     image: nginx:latest
     ports:
-      - 3041:80
+      - 3043:80
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       app:
         condition: service_healthy
-
-
-
-
-
-
-
-
