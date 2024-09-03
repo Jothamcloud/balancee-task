@@ -124,7 +124,77 @@ To set up the deployment:
    - `DEPLOY_USER`: The username to SSH into your staging server
    - `SSH_PASSWORD`: The password to SSH into your staging server
 
-Note: Using password-based authentication in CI/CD pipelines is generally not recommended for security reasons. Consider using SSH keys or other more secure authentication methods in a production environment.
+
+## Project Setup and Design Choices
+
+## Project Setup and Design Choices
+
+This section explains the setup of the project and the reason behind the choices made.
+
+### 1. Application Framework: Next.js with TypeScript
+
+- **Choice**: Next.js with TypeScript was chosen as the application framework.
+- **Reason**: 
+  - Next.js provides server-side rendering, which improves initial load time and SEO.
+  - TypeScript adds static typing, enhancing code quality and developer productivity.
+  - The combination allows for building scalable, type-safe React applications.
+
+### 2. Package Manager: pnpm
+
+- **Choice**: pnpm was selected as the package manager.
+- **Reason**:
+  - pnpm is faster and more efficient in terms of disk space usage compared to npm or Yarn.
+  - It uses a unique approach to managing dependencies, which can significantly reduce installation time and disk space in large projects.
+
+### 3. Containerization: Docker
+
+- **Choice**: Docker was used for containerization.
+- **Reason**:
+  - Docker ensures consistency across different development and deployment environments.
+  - It simplifies the process of packaging the application with all its dependencies.
+  - Containers are lightweight and start quickly, which is beneficial for scaling and continuous deployment.
+
+### 4. Container Orchestration: Docker Compose
+
+- **Choice**: Docker Compose was used for defining and running multi-container Docker applications.
+- **Reason**:
+  - While this project currently has a single service, Docker Compose allows for easy addition of other services (like databases) in the future.
+  - It provides a simple way to manage environment variables and container configurations.
+  - Docker Compose files can be version-controlled, making it easier to track changes in the infrastructure setup.
+
+### 5. Container Registry: Docker Hub
+
+- **Choice**: Docker Hub was selected as the container registry.
+- **Reason**:
+  - Docker Hub is widely used and integrates well with Docker and GitHub Actions.
+  - It offers free public repositories, which is suitable for this project.
+  - It provides reliable and fast image distribution.
+
+### 6. Deployment Strategy: Direct Deployment to Staging Server
+
+- **Choice**: The application is deployed directly to a staging server using SSH.
+- **Reason**:
+  - This approach demonstrates a basic deployment pipeline.
+  - It's suitable for small to medium-sized applications where complex orchestration might be too much.
+  - Using SSH allows for secure communication with the staging server.
+
+### 7. Testing: Jest
+
+- **Choice**: Jest was chosen as the testing framework.
+- **Reason**:
+  - Jest is better option for testing React and Next.js applications.
+  - It provides a complete and ready-to-use testing solution with minimal setup.
+
+### 8. Authentication for Deployment: Password-based SSH
+
+- **Choice**: Password-based SSH authentication is used for deployment.
+- **Reason**:
+  - While not ideal for production environments, this method is simple to set up for demonstration purposes.
+  - It shows the ability to handle sensitive information (passwords) using GitHub Secrets.
+  - In a real-world scenario, key-based authentication would be better for enhanced security.
+
+This setup demonstrates a modern, containerized application with an automated CI/CD pipeline. It showcases the use of current best practices in DevOps, including infrastructure as code (Docker Compose), automated testing, and continuous deployment. The choices made balance between simplicity (suitable for a demonstration project) and scalability (allowing for future growth and complexity).
+
 
 ## Technologies Used
 
