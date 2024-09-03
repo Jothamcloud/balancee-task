@@ -10,7 +10,7 @@ describe('GET /', () => {
       .expect(200)
       .end((err, res) => {
         if (err) return done(err);
-        expect(res.text).to.include('Hello, This is my submission for the Balanceè internship DevOps');
+        expect(res.text).to.include(' internshipHello, This is Jotham Arinze DevOps submission for the Balanceè internship');
         done();
       });
   });
