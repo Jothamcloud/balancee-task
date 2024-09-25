@@ -13,9 +13,12 @@ pipeline {
     stages {
         stage('Setup') {
             steps {
-                sh "curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | sudo -E bash -"
-                sh 'sudo apt-get install -y nodejs'
-                sh "sudo npm install -g pnpm@${PNPM_VERSION}"
+                script {
+                    // Install Node.js
+                    sh "curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | sudo -E bash -"
+                    sh 'sudo apt-get install -y nodejs'
+                    sh "sudo npm install -g pnpm@${PNPM_VERSION}"
+                }
             }
         }
 
