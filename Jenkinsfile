@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        NODE_VERSION = credentials('NODE_VERSION') 
-        PNPM_VERSION = credentials('PNPM_VERSION') 
+        // NODE_VERSION = credentials('NODE_VERSION') 
+        // PNPM_VERSION = credentials('PNPM_VERSION') 
         DOCKER_HUB_USERNAME = credentials('DOCKER_HUB_USERNAME') 
         DEPLOY_SERVER = credentials('DEPLOY_SERVER')  
         DEPLOY_USER = credentials('DEPLOY_USER') 
@@ -11,16 +11,16 @@ pipeline {
     }
 
     stages {
-        stage('Setup') {
-            steps {
-                script {
-                    // Install Node.js
-                    sh "curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | sudo -E bash -"
-                    sh 'sudo apt-get install -y nodejs'
-                    sh "sudo npm install -g pnpm@${PNPM_VERSION}"
-                }
-            }
-        }
+        // stage('Setup') {
+        //     steps {
+        //         script {
+        //             // Install Node.js
+        //             sh "curl -fsSL https://deb.nodesource.com/setup_${NODE_VERSION}.x | sudo -E bash -"
+        //             sh 'sudo apt-get install -y nodejs'
+        //             sh "sudo npm install -g pnpm@${PNPM_VERSION}"
+        //         }
+        //     }
+        // }
 
         stage('Build') {
             steps {
