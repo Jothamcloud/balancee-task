@@ -212,4 +212,4 @@ This setup demonstrates a modern, containerized application with an automated CI
 
 Below is a screenshot of the application running successfully on a staging environment:
 
-![Application Running](Application.png)
+![Application Running](application-running22.png)
