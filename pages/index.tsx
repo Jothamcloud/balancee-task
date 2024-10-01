@@ -7,7 +7,7 @@ const Home: React.FC = () => {
     <div className={styles.container}>
       <Head>
         <title>Balanceè DevOps Submission</title>
-        <meta name="description" content="Jotham Arinze DevOps submission for the Balanceè internship" />
+        <meta name="description" content="Jotham Arinze DevOps submission for the Balanceè" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -16,7 +16,7 @@ const Home: React.FC = () => {
           Hello, Hello
         </h1>
         <p className={styles.description}>
-          This is Jotham Arinze DevOps submission for the Balanceè internship
+          This is Jotham Arinze DevOps submission for the Balanceè
         </p>
       </main>
     </div>

@@ -1,6 +1,6 @@
 # Balanceè DevOps Internship Submission
 
-This project is a submission for the Balanceè DevOps internship task. It demonstrates a CI/CD pipeline using GitHub Actions, Docker, Docker Compose, and Docker Hub for image storage and deployment.
+This project is a submission for the Balanceè DevOps task. It demonstrates a CI/CD pipeline using GitHub Actions, Docker, Docker Compose, and Docker Hub for image storage and deployment.
 
 ## Project Structure
 

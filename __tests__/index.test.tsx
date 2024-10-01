@@ -11,7 +11,7 @@ describe('Home', () => {
 
   it('renders the description', () => {
     render(<Home />)
-    const description = screen.getByText(/This is Jotham Arinze DevOps submission for the Balanceè internship/i)
+    const description = screen.getByText(/This is Jotham Arinze DevOps submission for the Balanceè/i)
     expect(description).toBeInTheDocument()
   })
 })
